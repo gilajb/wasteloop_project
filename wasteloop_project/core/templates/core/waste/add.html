@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Add Waste Entry — WasteLoop{% endblock %}
+
+{% block content %}
+<div class="wl-page-header">
+  <div class="container">
+    <h1><i class="bi bi-plus-circle me-2"></i>Add Waste Entry</h1>
+    <p class="mb-0 opacity-75">Log a verified waste collection</p>
+  </div>
+</div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="wl-form-card">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="mb-4">
+            <label for="{{ field.id_for_label }}" class="form-label fw-500">
+              {{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}<div class="form-text text-muted">{{ field.help_text }}</div>{% endif %}
+            {% for error in field.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ error }}</div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>
+          {% endif %}
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-wl-primary btn-lg flex-grow-1">
+              <i class="bi bi-check-circle me-2"></i>Submit Entry
+            </button>
+            <a href="{% url 'core:waste_list' %}" class="btn btn-outline-secondary btn-lg">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

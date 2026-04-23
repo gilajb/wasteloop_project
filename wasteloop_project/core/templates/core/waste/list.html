@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}Waste Entries — WasteLoop{% endblock %}
+
+{% block content %}
+<div class="wl-page-header">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+      <h1><i class="bi bi-list-check me-2"></i>Waste Entries</h1>
+      <p class="mb-0 opacity-75">{{ entries.paginator.count }} total entr{{ entries.paginator.count|pluralize:"y,ies" }}</p>
+    </div>
+    {% if user.role == 'admin' %}
+    <a href="{% url 'core:add_waste_entry' %}" class="btn wl-btn-amber">
+      <i class="bi bi-plus-circle me-2"></i>Add Entry
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container py-4">
+  <!-- FILTERS (admin only) -->
+  {% if user.role == 'admin' %}
+  <form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label small fw-500">Waste Type</label>
+      <select name="waste_type" class="form-select">
+        <option value="">All Types</option>
+        {% for val, label in waste_types %}
+          <option value="{{ val }}" {% if filter_type == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label small fw-500">Verification</label>
+      <select name="verified" class="form-select">
+        <option value="">All</option>
+        <option value="1" {% if filter_verified == '1' %}selected{% endif %}>Verified</option>
+        <option value="0" {% if filter_verified == '0' %}selected{% endif %}>Unverified</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-wl-primary">Filter</button>
+      <a href="{% url 'core:waste_list' %}" class="btn btn-outline-secondary ms-1">Clear</a>
+    </div>
+  </form>
+  {% endif %}
+
+  {% if entries.object_list %}
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table wl-table mb-0">
+        <thead>
+          <tr>
+            {% if user.role == 'admin' %}<th>Collector</th>{% endif %}
+            <th>Date</th><th>Waste Type</th><th>Weight</th><th>Verified</th><th>Payment</th>
+            {% if user.role == 'admin' %}<th>Action</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in entries %}
+          <tr>
+            {% if user.role == 'admin' %}
+            <td>{{ entry.collector.get_full_name|default:entry.collector.username }}</td>
+            {% endif %}
+            <td>{{ entry.date_collected|date:"d M Y" }}</td>
+            <td><span class="badge bg-secondary">{{ entry.get_waste_type_display }}</span></td>
+            <td class="fw-bold">{{ entry.weight_kg }} kg</td>
+            <td>
+              {% if entry.verified_by_admin %}
+                <span class="badge bg-success">✔ Verified</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">⏳ Pending</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if entry.payment %}
+                {% if entry.payment.is_paid %}
+                  <span class="badge bg-success">Paid</span>
+                  <small class="text-muted d-block">KES {{ entry.payment.amount|floatformat:2 }}</small>
+                {% else %}
+                  <span class="badge badge-pending">Pending</span>
+                  <small class="text-muted d-block">KES {{ entry.payment.amount|floatformat:2 }}</small>
+                {% endif %}
+              {% else %}—{% endif %}
+            </td>
+            {% if user.role == 'admin' %}
+            <td>
+              <form method="post" action="{% url 'core:verify_waste' entry.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button type="submit" class="btn btn-sm {% if entry.verified_by_admin %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
+                  {% if entry.verified_by_admin %}Unverify{% else %}Verify{% endif %}
+                </button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if entries.has_other_pages %}
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if entries.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ entries.previous_page_number }}&waste_type={{ filter_type }}&verified={{ filter_verified }}">‹ Prev</a></li>
+      {% endif %}
+      <li class="page-item disabled"><span class="page-link">{{ entries.number }} / {{ entries.paginator.num_pages }}</span></li>
+      {% if entries.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ entries.next_page_number }}&waste_type={{ filter_type }}&verified={{ filter_verified }}">Next ›</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="card border-0 bg-light p-5 text-center">
+    <i class="bi bi-inbox text-muted" style="font-size:3rem;"></i>
+    <h5 class="mt-3 text-muted">No waste entries found</h5>
+    {% if user.role == 'admin' %}
+    <a href="{% url 'core:add_waste_entry' %}" class="btn btn-wl-primary mt-3">Add First Entry</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

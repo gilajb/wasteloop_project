@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}About — WasteLoop{% endblock %}
+
+{% block content %}
+<div class="wl-page-header">
+  <div class="container"><h1>About WasteLoop</h1><p class="mb-0 opacity-75">Our mission, our model, our community.</p></div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <h2 class="fw-bold text-navy mb-3">The Problem</h2>
+        <p>Refugee settlements face severe waste management challenges — limited infrastructure, rapid population growth, and inadequate formal collection systems. Large amounts of waste accumulate, creating health risks and degraded living conditions.</p>
+        <p class="mb-0">Current interventions are short-term, grant-funded clean-ups that fail to create sustainable impact. Waste is seen as a burden rather than a resource.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="card border-0 bg-danger bg-opacity-10 p-4 rounded-3">
+          <h5 class="fw-bold text-danger mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>The Cycle</h5>
+          <ul class="mb-0">
+            <li class="mb-2">Unmanaged waste piles up</li>
+            <li class="mb-2">Health and environmental risks grow</li>
+            <li class="mb-2">Short-term grants fund one-off clean-ups</li>
+            <li>Communities remain dependent on external funding</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wl-sand py-5">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 order-lg-2">
+        <h2 class="fw-bold text-navy mb-3">Our Solution</h2>
+        <p>WasteLoop builds a sustainable, community-driven circular economy within refugee settlements — transforming waste into economic opportunity.</p>
+        <p class="mb-0">We mobilise refugees as waste collectors, connect collected materials to recycling partners, and provide financial incentives that make waste collection a viable income source.</p>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="card border-0 bg-success bg-opacity-10 p-4 rounded-3">
+          <h5 class="fw-bold text-success mb-3"><i class="bi bi-arrow-repeat me-2"></i>The Circular Model</h5>
+          <div class="d-flex align-items-start mb-3">
+            <span class="badge bg-success me-3 mt-1">1</span>
+            <div><strong>Collect</strong> — Refugees gather and sort waste at community points</div>
+          </div>
+          <div class="d-flex align-items-start mb-3">
+            <span class="badge bg-success me-3 mt-1">2</span>
+            <div><strong>Verify</strong> — Waste is weighed and logged at the collection hub</div>
+          </div>
+          <div class="d-flex align-items-start mb-3">
+            <span class="badge bg-success me-3 mt-1">3</span>
+            <div><strong>Sell</strong> — WasteLoop aggregates and sells in bulk to recyclers</div>
+          </div>
+          <div class="d-flex align-items-start">
+            <span class="badge bg-success me-3 mt-1">4</span>
+            <div><strong>Pay</strong> — Collectors receive fair payment based on weight and type</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-center text-navy mb-5">Why Refugee Settlements?</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card wl-stat-card h-100 p-4">
+          <i class="bi bi-people-fill text-ocean fs-2 mb-3"></i>
+          <h5 class="fw-bold">Untapped Workforce</h5>
+          <p class="text-muted mb-0">Large, motivated communities with time and capacity to collect — just needing a fair system to participate in.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card wl-stat-card h-100 p-4">
+          <i class="bi bi-currency-exchange text-ocean fs-2 mb-3"></i>
+          <h5 class="fw-bold">Economic Need</h5>
+          <p class="text-muted mb-0">Limited formal employment opportunities mean waste collection can become a meaningful, dignified income source.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card wl-stat-card h-100 p-4">
+          <i class="bi bi-globe-africa text-ocean fs-2 mb-3"></i>
+          <h5 class="fw-bold">Environmental Impact</h5>
+          <p class="text-muted mb-0">Reducing waste accumulation directly improves health outcomes and living conditions in densely populated settlements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wl-sand py-5 text-center">
+  <div class="container">
+    <h2 class="fw-bold text-navy mb-3">Join the Movement</h2>
+    <p class="text-muted mb-4">Whether you're a collector, a partner, or a supporter — there's a place for you in WasteLoop.</p>
+    <a href="{% url 'core:register' %}" class="btn wl-btn-amber btn-lg me-2">Join as Collector</a>
+    <a href="{% url 'core:contact' %}" class="btn btn-outline-secondary btn-lg">Get in Touch</a>
+  </div>
+</section>
+{% endblock %}

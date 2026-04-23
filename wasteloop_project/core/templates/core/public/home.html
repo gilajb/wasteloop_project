@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}WasteLoop — Turn Waste Into Income{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="wl-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <h1 class="fw-bold mb-3">Turn Waste Into Income</h1>
+        <p class="lead mb-4">WasteLoop connects refugee communities with recycling partners — turning everyday waste into real earnings and a cleaner environment.</p>
+        <a href="{% url 'core:register' %}" class="btn wl-btn-amber btn-lg me-2 mb-2">Join as Collector</a>
+        <a href="{% url 'core:about' %}" class="btn btn-outline-light btn-lg mb-2">Learn More</a>
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <i class="bi bi-recycle" style="font-size:10rem;opacity:0.25;"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-2 text-navy">How It Works</h2>
+    <p class="text-center text-muted mb-5">Three simple steps to turn waste into income</p>
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="wl-step-icon"><i class="bi bi-bag-fill"></i></div>
+        <h5 class="fw-bold">1. Collect</h5>
+        <p class="text-muted">Gather and sort waste from your community — plastic, metal, paper, and more.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="wl-step-icon"><i class="bi bi-clipboard-check-fill"></i></div>
+        <h5 class="fw-bold">2. Verify</h5>
+        <p class="text-muted">Bring waste to the collection hub. It's weighed, categorised, and logged on the platform.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="wl-step-icon"><i class="bi bi-cash-coin"></i></div>
+        <h5 class="fw-bold">3. Earn</h5>
+        <p class="text-muted">Get paid based on the type and weight of waste you collected. Transparent and fair.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STATS -->
+<section class="wl-sand py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5 text-navy">Our Impact So Far</h2>
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="card wl-stat-card wl-stat-blue p-4">
+          <div class="wl-impact-number">{{ stat.total_waste_kg|floatformat:0 }}<span style="font-size:1.5rem"> kg</span></div>
+          <div class="wl-impact-unit mt-2">Waste Recycled</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card wl-stat-card wl-stat-green p-4">
+          <div class="wl-impact-number" style="color:#198754;">KES {{ stat.total_income_generated|floatformat:0 }}</div>
+          <div class="wl-impact-unit mt-2">Earned by Community</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card wl-stat-card wl-stat-amber p-4">
+          <div class="wl-impact-number" style="color:#F5A623;">{{ stat.active_collectors }}</div>
+          <div class="wl-impact-unit mt-2">Active Collectors</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3 text-navy">Ready to make a difference?</h2>
+    <p class="text-muted mb-4">Join WasteLoop today and start earning from the waste around you.</p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'core:dashboard' %}" class="btn btn-wl-primary btn-lg">Go to Dashboard</a>
+    {% else %}
+      <a href="{% url 'core:register' %}" class="btn wl-btn-amber btn-lg me-2">Join as Collector</a>
+      <a href="{% url 'core:login' %}" class="btn btn-outline-secondary btn-lg">Admin Login</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

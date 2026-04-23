@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Impact — WasteLoop{% endblock %}
+
+{% block content %}
+<div class="wl-page-header">
+  <div class="container">
+    <h1><i class="bi bi-bar-chart-fill me-2"></i>Our Impact</h1>
+    <p class="mb-0 opacity-75">Real numbers, real change, real people.</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <!-- BIG NUMBERS -->
+  <div class="row g-4 mb-5 text-center">
+    <div class="col-md-4">
+      <div class="card wl-stat-card wl-stat-blue p-5">
+        <div class="wl-impact-number">{{ stat.total_waste_kg|floatformat:0 }}</div>
+        <div class="wl-impact-unit mt-2">kg of Waste Recycled</div>
+        <p class="text-muted small mt-2 mb-0">Diverted from the environment</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card wl-stat-card wl-stat-green p-5">
+        <div class="wl-impact-number" style="color:#198754;">{{ stat.total_income_generated|floatformat:0 }}</div>
+        <div class="wl-impact-unit mt-2">KES Earned by Community</div>
+        <p class="text-muted small mt-2 mb-0">Direct income to collectors</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card wl-stat-card wl-stat-amber p-5">
+        <div class="wl-impact-number" style="color:#F5A623;">{{ stat.active_collectors }}</div>
+        <div class="wl-impact-unit mt-2">Active Collectors</div>
+        <p class="text-muted small mt-2 mb-0">Community members earning</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- WASTE BY TYPE -->
+    {% if waste_by_type %}
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h5 class="fw-bold text-navy mb-4"><i class="bi bi-pie-chart me-2"></i>Waste by Type (Verified)</h5>
+        {% for item in waste_by_type %}
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-500 text-capitalize">{{ item.waste_type }}</span>
+            <span class="text-muted small">{{ item.total_kg|floatformat:1 }} kg</span>
+          </div>
+          <div class="progress" style="height:10px;border-radius:6px;">
+            <div class="progress-bar bg-ocean" role="progressbar"
+              style="width:{% widthratio item.total_kg stat.total_waste_kg 100 %}%;border-radius:6px;">
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- TOP COLLECTORS -->
+    {% if top_collectors %}
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h5 class="fw-bold text-navy mb-4"><i class="bi bi-trophy me-2"></i>Top Collectors</h5>
+        {% for collector in top_collectors %}
+        <div class="d-flex align-items-center justify-content-between mb-3 pb-3 {% if not forloop.last %}border-bottom{% endif %}">
+          <div class="d-flex align-items-center">
+            <span class="badge bg-ocean me-3" class="rank-badge rank-{{ forloop.counter }}">{{ forloop.counter }}</span>
+            <div>
+              <div class="fw-500">{{ collector.get_full_name|default:collector.username }}</div>
+              <small class="text-muted">{{ collector.location }}</small>
+            </div>
+          </div>
+          <span class="fw-bold text-ocean">{{ collector.total_kg|floatformat:1 }} kg</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ENVIRONMENTAL NOTE -->
+  <div class="card border-0 bg-success bg-opacity-10 mt-5 p-4 rounded-3 text-center">
+    <i class="bi bi-globe-africa text-success fs-2 mb-2"></i>
+    <h5 class="fw-bold text-success">Environmental Impact</h5>
+    <p class="text-muted mb-0">Every kilogram of waste diverted from landfill reduces greenhouse gas emissions and protects the local environment. WasteLoop collectors are environmental champions.</p>
+  </div>
+</div>
+{% endblock %}

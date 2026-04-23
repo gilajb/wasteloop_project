@@ -1,0 +1,566 @@
+/* ═══════════════════════════════════════════════════════════
+   WasteLoop — Complete Design System
+   ───────────────────────────────────────────────────────────
+   Palette (from spec):
+     Ocean Blue  #185FA5  primary / nav / buttons
+     Deep Navy   #0C447C  headings / page headers
+     Warm Sand   #F1EFE8  alt section backgrounds
+     Amber       #F5A623  CTA only — used sparingly
+     Green       #198754  success / earnings / paid
+   ───────────────────────────────────────────────────────────
+   Fonts (from spec):
+     Space Grotesk — headings / stats / logo
+     DM Sans       — body text / labels
+═══════════════════════════════════════════════════════════ */
+
+/* ── 1. CSS CUSTOM PROPERTIES ─────────────────────────────── */
+:root {
+  --wl-ocean:      #185FA5;
+  --wl-navy:       #0C447C;
+  --wl-sand:       #F1EFE8;
+  --wl-amber:      #F5A623;
+  --wl-green:      #198754;
+  --wl-text:       #2d2d2d;
+  --wl-muted:      #6c757d;
+  --wl-border:     #e2e6ea;
+  --wl-radius:     12px;
+  --wl-radius-sm:  8px;
+  --wl-shadow:     0 2px 16px rgba(0, 0, 0, 0.08);
+  --wl-shadow-lg:  0 8px 32px rgba(0, 0, 0, 0.12);
+  --wl-transition: 0.18s ease;
+}
+
+/* ── 2. BASE RESET ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--wl-text);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 3. TYPOGRAPHY ────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6,
+.navbar-brand,
+.stat-value,
+.wl-impact-number {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-weight: 700; }
+h2 { font-weight: 700; }
+h5 { font-weight: 600; }
+
+.fw-500 { font-weight: 500 !important; }
+
+/* Color utilities */
+.text-navy    { color: var(--wl-navy)  !important; }
+.text-ocean   { color: var(--wl-ocean) !important; }
+.bg-ocean     { background-color: var(--wl-ocean) !important; }
+.bg-navy      { background-color: var(--wl-navy)  !important; }
+.text-amber   { color: var(--wl-amber) !important; }
+
+/* ── 4. NAVBAR ────────────────────────────────────────────── */
+.wl-navbar {
+  background-color: var(--wl-ocean);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.wl-navbar .navbar-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff !important;
+}
+
+.wl-navbar .nav-link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88) !important;
+  padding: 0.42rem 0.72rem;
+  border-radius: 6px;
+  transition: background-color var(--wl-transition), color var(--wl-transition);
+}
+
+.wl-navbar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.13);
+  color: #fff !important;
+}
+
+.wl-navbar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* ── 5. BUTTONS ───────────────────────────────────────────── */
+
+/* Amber — primary CTA (used sparingly per spec) */
+.wl-btn-amber {
+  background-color: var(--wl-amber);
+  border-color: var(--wl-amber);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color var(--wl-transition),
+              transform var(--wl-transition),
+              box-shadow var(--wl-transition);
+}
+.wl-btn-amber:hover,
+.wl-btn-amber:focus {
+  background-color: #d9901d;
+  border-color: #d9901d;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(245, 166, 35, 0.38);
+}
+.wl-btn-amber:active { transform: translateY(0); }
+
+/* Blue — primary actions */
+.btn-wl-primary {
+  background-color: var(--wl-ocean);
+  border-color: var(--wl-ocean);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  letter-spacing: 0.01em;
+  transition: background-color var(--wl-transition),
+              transform var(--wl-transition),
+              box-shadow var(--wl-transition);
+}
+.btn-wl-primary:hover,
+.btn-wl-primary:focus {
+  background-color: var(--wl-navy);
+  border-color: var(--wl-navy);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(24, 95, 165, 0.32);
+}
+.btn-wl-primary:active { transform: translateY(0); }
+
+/* All buttons: accessible touch targets on mobile */
+@media (max-width: 768px) {
+  .btn { min-height: 44px; }
+}
+
+/* ── 6. HERO SECTION ──────────────────────────────────────── */
+.wl-hero {
+  background: linear-gradient(135deg, var(--wl-ocean) 0%, var(--wl-navy) 100%);
+  color: #fff;
+  padding: 5.5rem 0 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circle — no extra HTML needed */
+.wl-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+.wl-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 5%;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+}
+
+.wl-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.1rem;
+}
+
+.wl-hero p.lead {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ── 7. PAGE HEADER BANNER ────────────────────────────────── */
+.wl-page-header {
+  background: linear-gradient(120deg, var(--wl-navy) 0%, #0a3a6b 100%);
+  color: #fff;
+  padding: 2.5rem 0 2.2rem;
+  border-bottom: 3px solid var(--wl-ocean);
+}
+
+.wl-page-header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.wl-page-header p { opacity: 0.78; margin-bottom: 0; }
+
+/* ── 8. SECTION BACKGROUNDS ───────────────────────────────── */
+.wl-sand { background-color: var(--wl-sand); }
+
+/* ── 9. STAT CARDS ────────────────────────────────────────── */
+.wl-stat-card {
+  border: none !important;
+  border-radius: var(--wl-radius);
+  box-shadow: var(--wl-shadow);
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wl-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--wl-shadow-lg);
+}
+
+/* Colour-coded top border per card type */
+.wl-stat-blue  { border-top: 4px solid var(--wl-ocean) !important; }
+.wl-stat-green { border-top: 4px solid var(--wl-green) !important; }
+.wl-stat-amber { border-top: 4px solid var(--wl-amber) !important; }
+.wl-stat-navy  { border-top: 4px solid var(--wl-navy)  !important; }
+
+.wl-stat-card .stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.15rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.wl-stat-card .stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wl-muted);
+  margin-top: 0.4rem;
+}
+
+/* ── 10. IMPACT NUMBERS ───────────────────────────────────── */
+.wl-impact-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  font-weight: 700;
+  color: var(--wl-ocean);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.wl-impact-unit {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--wl-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 0.45rem;
+}
+
+/* ── 11. HOW IT WORKS — STEP ICONS ───────────────────────── */
+.wl-step-icon {
+  width: 68px;
+  height: 68px;
+  background-color: var(--wl-ocean);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 16px rgba(24, 95, 165, 0.3);
+  flex-shrink: 0;
+  transition: transform var(--wl-transition), box-shadow var(--wl-transition);
+}
+
+.wl-step-icon:hover,
+.card:hover .wl-step-icon {
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(24, 95, 165, 0.4);
+}
+
+/* ── 12. TABLES ───────────────────────────────────────────── */
+.wl-table {
+  font-size: 0.93rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.wl-table thead th {
+  background-color: var(--wl-ocean);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1rem;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Rounded table corners */
+.wl-table thead th:first-child { border-radius: var(--wl-radius-sm) 0 0 0; }
+.wl-table thead th:last-child  { border-radius: 0 var(--wl-radius-sm) 0 0; }
+
+.wl-table tbody td {
+  padding: 0.78rem 1rem;
+  vertical-align: middle;
+  border-color: #f2f4f6;
+}
+
+.wl-table tbody tr {
+  transition: background-color 0.12s;
+}
+.wl-table tbody tr:hover { background-color: #f0f6ff; }
+
+/* ── 13. FORMS ────────────────────────────────────────────── */
+.wl-form-card {
+  background: #fff;
+  border: none;
+  border-radius: var(--wl-radius);
+  box-shadow: var(--wl-shadow);
+  padding: 2.2rem;
+}
+
+.wl-form-card .form-label,
+.form-label.fw-500 {
+  font-weight: 500;
+  font-size: 0.94rem;
+  margin-bottom: 0.38rem;
+  color: var(--wl-text);
+}
+
+.form-control,
+.form-select {
+  border: 1.5px solid #d0d6df;
+  border-radius: var(--wl-radius-sm);
+  padding: 0.65rem 0.9rem;
+  font-size: 1rem;
+  color: var(--wl-text);
+  background-color: #fdfdfd;
+  transition: border-color var(--wl-transition), box-shadow var(--wl-transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--wl-ocean);
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.14);
+  background-color: #fff;
+  outline: none;
+}
+
+.form-control::placeholder { color: #adb5bd; }
+
+/* Large inputs */
+.form-control-lg,
+.form-select-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+  min-height: 52px;
+  border-radius: var(--wl-radius-sm);
+}
+
+/* Validation states */
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* ── 14. BADGES ───────────────────────────────────────────── */
+.badge {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.35em 0.72em;
+  border-radius: 6px;
+  font-size: 0.78em;
+}
+
+.badge-paid    { background-color: var(--wl-green) !important; color: #fff; }
+.badge-pending { background-color: var(--wl-amber) !important; color: #fff; }
+
+/* ── 15. ALERTS ───────────────────────────────────────────── */
+.alert {
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  padding: 0.88rem 1.1rem;
+  border-left: 4px solid transparent;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left-color: var(--wl-green);
+}
+.alert-danger {
+  background-color: #fde8e8;
+  color: #721c24;
+  border-left-color: #dc3545;
+}
+.alert-info {
+  background-color: #d8ecff;
+  color: #0c4a8a;
+  border-left-color: var(--wl-ocean);
+}
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left-color: var(--wl-amber);
+}
+
+/* ── 16. PAGINATION ───────────────────────────────────────── */
+.pagination .page-link {
+  color: var(--wl-ocean);
+  border: 1.5px solid var(--wl-border);
+  border-radius: var(--wl-radius-sm) !important;
+  margin: 0 2px;
+  font-size: 0.9rem;
+  padding: 0.44rem 0.85rem;
+  transition: background-color var(--wl-transition), color var(--wl-transition);
+}
+.pagination .page-link:hover {
+  background-color: var(--wl-ocean);
+  border-color: var(--wl-ocean);
+  color: #fff;
+}
+.pagination .page-item.disabled .page-link {
+  color: var(--wl-muted);
+  background-color: #f8f9fa;
+}
+
+/* ── 17. PROGRESS BARS (impact page) ─────────────────────── */
+.progress {
+  background-color: #e4eaf2;
+  border-radius: 6px;
+  height: 10px;
+}
+.progress-bar.bg-ocean {
+  background-color: var(--wl-ocean) !important;
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+
+/* ── 18. FOOTER ───────────────────────────────────────────── */
+.wl-footer {
+  background-color: var(--wl-sand);
+  border-top: 2px solid #ddd8ce;
+}
+.wl-footer a { transition: color var(--wl-transition); }
+.wl-footer a:hover { color: var(--wl-ocean) !important; }
+
+/* ── 19. LEADERBOARD (impact page) ───────────────────────── */
+.rank-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--wl-ocean);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+/* Gold / silver / bronze for top 3 */
+.rank-1 { background-color: #F5A623 !important; }
+.rank-2 { background-color: #adb5bd !important; }
+.rank-3 { background-color: #cd7f32 !important; }
+
+/* ── 20. EMPTY STATES ─────────────────────────────────────── */
+.wl-empty {
+  padding: 3.5rem 1rem;
+  text-align: center;
+  color: var(--wl-muted);
+}
+.wl-empty i {
+  font-size: 3.5rem;
+  opacity: 0.3;
+  display: block;
+  margin-bottom: 1rem;
+}
+.wl-empty h5 { color: var(--wl-muted); font-weight: 600; }
+
+/* ── 21. SHADOW UTILITIES ─────────────────────────────────── */
+.shadow-wl-sm { box-shadow: 0 1px 6px rgba(0,0,0,0.06) !important; }
+.shadow-wl    { box-shadow: var(--wl-shadow) !important; }
+.shadow-wl-lg { box-shadow: var(--wl-shadow-lg) !important; }
+
+/* ── 22. CARD GENERIC ─────────────────────────────────────── */
+.card {
+  border-radius: var(--wl-radius);
+}
+
+/* ── 23. RESPONSIVE — TABLET ──────────────────────────────── */
+@media (max-width: 768px) {
+  .wl-hero            { padding: 3.5rem 0 3rem; }
+  .wl-form-card       { padding: 1.5rem; }
+  .wl-page-header     { padding: 1.8rem 0 1.5rem; }
+
+  .wl-stat-card .stat-value  { font-size: 1.75rem; }
+
+  .wl-table thead th,
+  .wl-table tbody td  { padding: 0.65rem 0.75rem; font-size: 0.85rem; }
+}
+
+/* ── 24. RESPONSIVE — MOBILE ──────────────────────────────── */
+@media (max-width: 576px) {
+  .wl-hero h1         { font-size: 1.85rem; }
+  .wl-hero p.lead     { font-size: 1rem; }
+  .wl-impact-number   { font-size: 2.5rem; }
+
+  /* Stack hero CTAs full-width on small screens */
+  .wl-hero .btn-lg {
+    display: block;
+    width: 100%;
+    margin-right: 0 !important;
+    margin-bottom: 0.65rem;
+  }
+
+  /* Stack form action buttons */
+  .wl-form-card .d-flex.gap-2 {
+    flex-direction: column;
+  }
+  .wl-form-card .d-flex.gap-2 .btn { width: 100%; }
+
+  /* Compact table text */
+  .table-responsive   { font-size: 0.8rem; }
+}
+
+/* ── 25. PRINT ────────────────────────────────────────────── */
+@media print {
+  .wl-navbar,
+  .wl-footer,
+  .btn,
+  form[method="post"] { display: none !important; }
+
+  body { color: #000; font-size: 11pt; }
+
+  .wl-page-header {
+    background: none !important;
+    color: #000;
+    border-bottom: 2px solid #000;
+    padding: 0.5rem 0;
+  }
+
+  .wl-table thead { background-color: #ddd !important; color: #000 !important; }
+  .wl-stat-card   { box-shadow: none; border: 1px solid #ccc !important; }
+}
