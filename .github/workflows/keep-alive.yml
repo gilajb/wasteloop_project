@@ -1,0 +1,16 @@
+name: Keep Render App Awake
+
+on:
+  schedule:
+    # Runs every 10 minutes, 24/7. Render free tier sleeps after ~15 min idle.
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # lets you manually trigger a run from the Actions tab to test
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping WasteLoop
+        run: |
+          echo "Pinging https://wasteloop.onrender.com/ at $(date -u)"
+          curl --fail --silent --show-error -o /dev/null -w "HTTP status: %{http_code}\n" https://wasteloop.onrender.com/
